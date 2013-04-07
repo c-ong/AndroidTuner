@@ -42,6 +42,14 @@ public class MainActivity extends Activity implements OnClickListener {
 		eButton.setOnClickListener(this);
 		aButton = (Button) findViewById(R.id.a_button);
 		aButton.setOnClickListener(this);
+		dButton = (Button) findViewById(R.id.d_button);
+		dButton.setOnClickListener(this);
+		gButton = (Button) findViewById(R.id.g_button);
+		gButton.setOnClickListener(this);
+		bButton = (Button) findViewById(R.id.b_button);
+		bButton.setOnClickListener(this);
+		loweButton = (Button) findViewById(R.id.lowe_button);
+		loweButton.setOnClickListener(this);
 		
 		try{
 			initPd();
@@ -52,6 +60,11 @@ public class MainActivity extends Activity implements OnClickListener {
 			Log.e(TAG, e.toString());
 			finish();
 		}
+	}
+	
+	private void triggerNote(int n){
+		PdBase.sendFloat("midinote", n);
+		PdBase.sendBang("trigger");
 	}
 	
 	private void initPd() throws IOException{
@@ -87,8 +100,38 @@ public class MainActivity extends Activity implements OnClickListener {
 
 	@Override
 	public void onClick(View v) {
-		// TODO Auto-generated method stub
 		
+		switch(v.getId()){
+		
+		case R.id.e_button:
+			triggerNote(40);
+			break;
+		case R.id.a_button:
+			triggerNote(45);
+			break;
+		case R.id.d_button:
+			triggerNote(50);
+			break;
+		case R.id.g_button:
+			triggerNote(55);
+			break;
+		case R.id.b_button:
+			triggerNote(59);
+			break;
+		case R.id.lowe_button:
+			triggerNote(64);
+			break;
+			
+		}
+		
+			
+		
+	}
+	
+	public void onDestroy(){
+		super.onDestroy();
+		PdAudio.release();
+		PdBase.release();
 	}
 
 }
